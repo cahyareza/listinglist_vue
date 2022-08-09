@@ -1,5 +1,5 @@
 <template>
-  <div class="app" :class="{ 'has-background-black': isDark }">
+  <div class="app" :class="{ 'has-background-black': darkMode }">
     <div class="container is-max-desktop py-6 px-4">
       <div v-if="loading">
         <progress class="progress is-small is-info" max="100">60%</progress>
@@ -20,32 +20,28 @@ import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import ListingsList from './components/ListingsList';
 
+import useDarkMode from './hooks/useDarkMode';
+
 export default {
   name: 'App',
   setup() {
     // access the store
     const store = useStore();
-
-    // reactive data properties
-    const isDark = ref(false);
+    const { darkMode, toggleDarkMode } = useDarkMode();
 
     // computed properties
     const darkModeButtonText = computed(() => {
-      return isDark.value ? "Light Mode" : "Dark Mode";
+      return darkMode.value ? "Light Mode" : "Dark Mode";
     });
     const listings = computed(() => store.getters.listings); 
     const loading = computed(() => store.getters.loading);
-
-    // methods
-    const toggleDarkMode = () => { 
-      isDark.value = !isDark.value;
-    };
 
     // fire off actions for component created lifecycle stage
     store.dispatch("getListings");
 
     // return properties for component to access
-    return { 
+    return {
+      darkMode,
       darkModeButtonText,
       listings,
       loading,

@@ -10,7 +10,7 @@
     </div>
     <button
       class="button is-light"
-      :class="{ 'is-primary': isDark, 'is-info': !isDark }"
+      :class="{ 'is-primary': darkMode, 'is-info': !darkMode }"
       @click="resetListings" 
       :disabled="listings.length === 3">
       Reset
@@ -24,6 +24,8 @@ import { useStore } from "vuex";
 import ListingsListItem from './ListingsListItem';
 import Notification from './Notification';
 
+
+import useDarkMode from '../hooks/useDarkMode';
 import useNotification from "../hooks/useNotification";
 
 export default {
@@ -34,6 +36,8 @@ export default {
 
     // access the store
     const store = useStore();
+
+    const { darkMode } = useDarkMode();
 
     const {
         notification,
@@ -54,6 +58,7 @@ export default {
 
     // return properties for component to access
     return { 
+        darkMode,
         notification, 
         toggleNotification,
         resetListings
