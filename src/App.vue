@@ -17,12 +17,15 @@
 
 <script>
 import { ref, computed } from "vue";
-import { mapGetters } from 'vuex';
+import { useStore } from "vuex";
 import ListingsList from './components/ListingsList';
 
 export default {
   name: 'App',
   setup() {
+    // access the store
+    const store = useStore();
+
     // reactive data properties
     const isDark = ref(false);
 
@@ -30,6 +33,25 @@ export default {
     const darkModeButtonText = computed(() => {
       return isDark.value ? "Light Mode" : "Dark Mode";
     });
+    const listings = computed(() => store.getters.listings); 
+    const loading = computed(() => store.getters.loading);
+
+    // methods
+    const toggleDarkMode = () => { 
+      isDark.value = !isDark.value;
+    };
+
+    // fire off actions for component created lifecycle stage
+    store.dispatch("getListings");
+
+    // return properties for component to access
+    return { 
+      darkModeButtonText,
+      listings,
+      loading,
+      toggleDarkMode,
+    };
+
   },
   components: {
     ListingsList
