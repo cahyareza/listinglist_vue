@@ -19,8 +19,7 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
-import { useStore } from "vuex";
+import { onMounted, inject } from "vue";
 import ListingsListItem from './ListingsListItem';
 import Notification from './Notification';
 
@@ -35,7 +34,7 @@ export default {
   setup() {
 
     // access the store
-    const store = useStore();
+    const store = inject('store');
 
     const { darkMode } = useDarkMode();
 
@@ -48,7 +47,7 @@ export default {
     // methods
     const resetListings = () => {
         setNotification("Listings have been reset!");
-        return store.dispatch("resetListings");
+        return store.actions.resetListings();
     }
 
     // mounted lifecyle hook
