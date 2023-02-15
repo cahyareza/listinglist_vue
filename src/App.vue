@@ -5,7 +5,7 @@
         <progress class="progress is-small is-info" max="100">60%</progress>
       </div>
       <div v-if="!loading">
-        <ListingsList :listings="listings" :isDark="isDark" />
+        <ListingsList :listings="listings"/>
       </div>
       <button class="button is-small is-pulled-right my-4"
         @click="toggleDarkMode">

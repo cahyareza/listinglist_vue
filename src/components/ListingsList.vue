@@ -3,10 +3,9 @@
     <Notification 
       :notification="notification"
       :toggleNotification="toggleNotification"
-      :isDark="isDark" 
     />
     <div v-for="listing in listings" :key="listing.id">
-      <ListingsListItem :listing="listing" :isDark="isDark" />
+      <ListingsListItem :listing="listing" />
     </div>
     <button
       class="button is-light"
